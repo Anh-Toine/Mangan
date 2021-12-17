@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 
 client = commands.Bot(command_prefix='*')
 
-
-
 load_dotenv('.env')
 
 def get_quote():
