@@ -6,9 +6,8 @@ from dotenv import load_dotenv
 
 client = commands.Bot(command_prefix='*')
 
-
-
 load_dotenv('.env')
+TOKEN = os.getenv('TOKEN')
 
 def get_quote():
     response = requests.get("https://zenquotes.io/api/random")
@@ -31,5 +30,7 @@ async def zen(ctx):
 async def latency(ctx):
     await ctx.channel.send(f"PINGED: {round(client.latency * 1000)}ms")
 
-
-client.run(os.getenv('TOKEN'))
+@client.command()
+async def pee():
+    pass
+client.run(TOKEN)
