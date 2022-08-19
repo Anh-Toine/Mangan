@@ -1,10 +1,14 @@
-from nextcord.ext import commands
+from discord.ext import commands
+import discord
 import os
 import requests
 import json
 from dotenv import load_dotenv
 
-client = commands.Bot(command_prefix='*')
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix="*", intents=intents)
 
 load_dotenv('.env')
 TOKEN = os.getenv('TOKEN')
@@ -16,21 +20,20 @@ def get_quote():
     return quote
 
 
-@client.event
+@bot.event
 async def on_ready():
-	print("Mangan is on, user: {0.user}".format(client))
+	print("Manganese is on, user: {0.user}".format(bot))
 
-@client.command(aliases=['z'])
+@bot.command(aliases=['z'])
 async def zen(ctx):
     zenquote = get_quote()
     print(zenquote)
     await ctx.channel.send(zenquote)
 
-@client.command(aliases=['ping','l'])
+@bot.command(aliases=['ping','l'])
 async def latency(ctx):
-    await ctx.channel.send(f"PINGED: {round(client.latency * 1000)}ms")
+    msg = f"PINGED: {round(bot.latency * 1000)}ms"
+    print(msg)
+    await ctx.channel.send(msg)
 
-@client.command()
-async def pee():
-    pass
-client.run(TOKEN)
+bot.run(TOKEN)
