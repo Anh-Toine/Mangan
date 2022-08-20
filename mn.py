@@ -14,17 +14,18 @@ load_dotenv('.env')
 TOKEN = os.getenv('TOKEN')
 
 
+zen_link = "https://zenquotes.io/api/random"
 
 def get_text_quote():
-    response = requests.get("https://zenquotes.io/api/random")
+    response = requests.get(zen_link)
     json_data = json.loads(response.text)
     text_quote = '```' + json_data[0]['q'] + "\n ~" + json_data[0]['a'] + '```'
     return text_quote
 
 def get_quote():
-    response = requests.get("https://zenquotes.io/api/random")
+    response = requests.get(zen_link)
     json_data = json.loads(response.text)
-    quote = '**'+json_data[0]['q']+'**' + "\n" + '*'+json_data[0]['a']+'*'
+    quote = '*' + json_data[0]['q'] + '*' + "\n" + '**' + json_data[0]['a'] + '**'
     return quote
 
 
@@ -44,7 +45,7 @@ async def zentext(ctx):
     print(zen_text_quote)
     await ctx.channel.send(zen_text_quote)
 
-@bot.command(aliases=['ping','l'])
+@bot.command(aliases=['ping','l','p'])
 async def latency(ctx):
     msg = f"PINGED: {round(bot.latency * 1000)}ms"
     print(msg)
